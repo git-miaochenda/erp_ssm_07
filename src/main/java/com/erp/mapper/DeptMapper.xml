@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erp.mapper.DeptMapper">
+
+    <!--void remove()-->
+    <delete id="remove">
+        delete from `dept` where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--void update()-->
+    <update id="update">
+        update `dept` set `name`=#{dept.name},tel=#{dept.tel} where id=#{dept.id}
+    </update>
+
+    <!--Dept findById()-->
+    <select id="findById" resultType="com.erp.pojo.Dept">
+        select * from `dept` where id=#{id}
+    </select>
+
+    <!--void add()-->
+    <insert id="add">
+        insert into `dept`(`name`,`tel`) values(#{dept.name},#{dept.tel});
+    </insert>
+
+    <!-- page() -->
+    <select id="page" resultType="com.erp.pojo.Dept">
+        select * from `dept` limit #{startNum},#{pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from `dept`
+    </select>
+
+    <select id="findAll" resultType="com.erp.pojo.Dept">
+        select * from `dept`
+    </select>
+</mapper>
